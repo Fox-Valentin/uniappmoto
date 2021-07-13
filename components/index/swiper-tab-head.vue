@@ -36,7 +36,7 @@
 	}
 </script>
 
-<style>
+<style scoped lang="scss">
 .uni-swiper-tab{
 	border-bottom: 1upx solid #EEEEEE;
 }
@@ -48,10 +48,20 @@
 	color: #343434;
 }
 .active .swiper-tab-line{
-	border-bottom: 6upx solid #FEDE33;
+	border-bottom: 6upx solid $uni-color-botton;
 	width: 70upx;
 	margin: auto;
-	border-top: 6upx solid #FEDE33;
 	border-radius:20upx;
+}
+.swiper-tab-line{
+	border-bottom: 6upx solid #fff;
+	width: 70upx;
+	margin: auto;
+	border-radius:20upx;
+}
+/deep/ .uni-scroll-view-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 </style>

@@ -1,34 +1,29 @@
 <template>
 	<view>
-      
 	<swiper-tab-head 
 	:tabBars="tabBars" 
 	:tabIndex="tabIndex"
 	@tabtap="tabtap">
 	</swiper-tab-head>
-	
 	<view class="uni-tab-bar">
-	<swiper class="swiper-box" 
-	:style="{height:swiperheight+'px'}" 
-	:current="tabIndex"
-	@change="tabChange">
-		<swiper-item v-for="(items,index) in newslist" :key="index"> 
+		<swiper class="swiper-box" 
+		:style="{height:swiperheight+'px'}" 
+		:current="tabIndex"
+		@change="tabChange">
+		<swiper-item  v-for="(items,index) in newslist" :key="index">
 			<scroll-view scroll-y class="list" @scrolltolower="loadmore(index)">
 				<template v-if="items.list.length>0">
-					<!-- 图文列表 -->
 					<block v-for="(item,index1) in items.list" :key="index1">
 						<index-list :item="item" :index="index1"></index-list>
 					</block>
-					<!-- 上拉加载 -->
 					<load-more :loadtext="items.loadtext"></load-more>
 				</template>
 				<template v-else>
-					<!-- 无内容默认 -->
 					<no-thing></no-thing>
 				</template>
 			</scroll-view>
 		</swiper-item>
-	</swiper>   
+		</swiper>  
 	</view>
 	   
 	</view>
@@ -53,11 +48,7 @@
 				tabIndex:0,
 				tabBars:[
 					{ name:"关注",id:"guanzhu" },
-					{ name:"推荐",id:"tuijian" },
-					{ name:"体育",id:"tiyu" 	  },
-					{ name:"热点",id:"redian"  },
-					{ name:"财经",id:"caijing" },
-					{ name:"娱乐",id:"yule"    },
+					{ name:"机车公园",id:"jichegongongyuan" },
 				],	
 				newslist:[
 					{
