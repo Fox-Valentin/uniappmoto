@@ -12,7 +12,7 @@
 			</view>
 		</view>
 		<view class="index-list2" @tap="opendetail">{{item.title}}</view>
-		<view class="index-list3 u-f-ajc" @tap="opendetail">
+		<view class="index-list3 u-f-ajc">
 			<!-- 图片 -->
 			<image :src="item.titlepic" 
 			mode="widthFix" 
