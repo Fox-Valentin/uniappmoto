@@ -118,7 +118,6 @@
 			if(this.userNoShow){
 				this.userDisplay = 'none';
 			}
-			console.log(this.operateNoShow);
 			if(this.operateNoShow){
 				this.operateDisplay = 'none';
 			}
