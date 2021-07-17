@@ -324,6 +324,30 @@
             }
             
         }
+        ,{
+            "path" : "pages/booking-result/booking-result",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "预约成功",
+                "enablePullDownRefresh": false,
+            	"app-plus":{
+            		"scrollIndicator":"none"
+            	}
+            }
+            
+        }
+        ,{
+            "path" : "pages/add-moto/add-moto",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "添加车辆",
+                "enablePullDownRefresh": false,
+            	"app-plus":{
+            		"scrollIndicator":"none"
+            	}
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
