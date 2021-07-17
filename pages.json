@@ -258,7 +258,6 @@
             	}
             }
         }
-        
         ,{
             "path" : "pages/user-set-userinfo/user-set-userinfo",
             "style" : {
@@ -312,6 +311,18 @@
 					}
 				}
 			}
+        }
+        ,{
+            "path" : "pages/booking/booking",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "预约",
+                "enablePullDownRefresh": false,
+				"app-plus":{
+					"scrollIndicator":"none"
+				}
+            }
+            
         }
     ],
 	"globalStyle": {

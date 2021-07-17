@@ -14,7 +14,7 @@
 		<!-- 上传多图 -->
 		<uploud-images @uploud="uploud"></uploud-images>
 		<!-- 弹出公告 -->
-		<uni-popup :show="showpopup" position="middle" mode="fixed" @hidePopup="hidePopup">
+<!-- 		<uni-popup :show="showpopup" position="middle" mode="fixed" @hidePopup="hidePopup">
 			<view class="gonggao">
 				<view class="u-f-ajc">
 					<image src="../../static/common/addinput.png" mode="widthFix"></image>
@@ -25,7 +25,7 @@
 				<view>4.涉及黄色，政治，广告及骚扰信息</view>
 				<button type="default" @tap="hidePopup">朕知道了</button>
 			</view>
-		</uni-popup>
+		</uni-popup> -->
 		
 	</view>
 </template>
@@ -34,12 +34,12 @@
 	let changelook= ['所有人可见', '仅自己可见'];
 	import uniNavBar from "../../components/uni-nav-bar/uni-nav-bar.vue";
 	import uploudImages from "../../components/common/uploud-images.vue";
-	import uniPopup from "../../components/uni-popup/uni-popup.vue";
+	// import uniPopup from "../../components/uni-popup/uni-popup.vue";
 	export default {
 		components:{
 			uniNavBar,
 			uploudImages,
-			uniPopup
+			// uniPopup
 		},
 		data() {
 			return {
