@@ -348,6 +348,30 @@
             }
             
         }
+        ,{
+            "path" : "pages/other-parameters/other-parameters",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "其他参数",
+                "enablePullDownRefresh": false,
+            	"app-plus":{
+            		"scrollIndicator":"none"
+            	}
+            }
+            
+        }
+        ,{
+            "path" : "pages/carport-list/carport-list",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的车库",
+                "enablePullDownRefresh": false,
+            	"app-plus":{
+            		"scrollIndicator":"none"
+            	}
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
