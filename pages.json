@@ -372,6 +372,18 @@
             }
             
         }
+        ,{
+            "path" : "pages/user-center/user-center",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+            	"app-plus":{
+            		"scrollIndicator":"none"
+            	}
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
