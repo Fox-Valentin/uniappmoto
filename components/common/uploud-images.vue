@@ -1,11 +1,11 @@
 <template>
-	<view class="uni-list list-pd">
+	<view class="uni-list">
 		<view class="uni-list-cell cell-pd">
 			<view class="uni-uploader">
-				<view class="uni-uploader-head">
+				<!-- <view class="uni-uploader-head">
 					<view class="uni-uploader-title">点击可预览选好的图片</view>
 					<view class="uni-uploader-info">{{imageList.length}}/9</view>
-				</view>
+				</view> -->
 				<view class="uni-uploader-body">
 					<view class="uni-uploader__files">
 						<block v-for="(image,index) in imageList" :key="index">
@@ -83,7 +83,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.cell-pd {
 		padding: 22upx 30upx;
 	}
@@ -97,10 +97,16 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		background: #333333;
+		background: #8f8f94;
 		color: #FFFFFF;
 		padding: 2upx 10upx;
 		border-radius:10upx;
 		z-index: 100;
+	}
+	.uni-list::before, .uni-list::after {
+		display: none;
+	}
+	.uni-list-cell::after {
+		display: none;
 	}
 </style>
