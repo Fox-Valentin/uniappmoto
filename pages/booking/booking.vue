@@ -40,23 +40,31 @@
 		</uni-list>
 		<view class="uni-padding-wrap uni-common-mt">
 			<button type="primary" class="book-btn" hover-class="book-btn-hover">立即预约</button>
-			<button type="primary" class="book-btn" hover-class="book-btn-hover" @click="toggle('center')">222</button>
 		</view>
 		<view class="">
-			<uni-popup ref="popup" background-color="#fff">
+			<uni-popup ref="popup" background-color="#fff" class="booking-popup">
 				<view class="booking-success">
+					<view class="booking-title">
+						<view class="booking-title-text">
+							预约时间
+						</view>
+					</view>
 					<view class="booking-date">2021-04-03</view>
 					<view class="booking-time">
 						<text>上午</text>
-						<text>10:30</text>
+						<text class="booking-time_text">10:30</text>
 					</view>
 					<view class="booking-list">
-						<view class="booking-item">记得按照时间早点来哦</view>
-						<view class="booking-item">优惠就能提前知道呢</view>
+						<view class="booking-item">
+							<uni-icons color="#FF7663" type="smallcircle-filled"></uni-icons> 记得按照时间早点来哦
+						</view>
+						<view class="booking-item">
+							<uni-icons color="#FF7663" type="smallcircle-filled"></uni-icons>优惠就能提前知道呢
+						</view>
 					</view>
 					<view class="booking-btns">
-						<view class="booking-btn_cancel">取消</view>
-						<view class="booking-btn_ok">取消</view>
+						<view class="booking-btn_cancel booking-btn">取消</view>
+						<view class="booking-btn_ok booking-btn">确认</view>
 					</view>
 				</view>
 			</uni-popup>
@@ -139,5 +147,73 @@
 	}
 	.book-btn-hover {
 		background-color: #fd5841;
+	}
+	.booking-popup {
+		/deep/ .uni-popup__wrapper{
+			border-radius: 20px;
+		}
+	}
+	.booking-success {
+		width: 500rpx;
+		text-align: center;
+		padding: 30rpx 30rpx 60rpx;
+		border-radius: 20px;
+		.booking-title {
+			background-color: $uni-color-botton;
+			padding-bottom: 6px;
+			margin-bottom: 20px;
+			.booking-title-text {
+				color: #FFFFFF;
+				border-bottom: 2px solid #FFFFFF;
+				display: inline-block;
+				font-size: 20px;
+			}
+		}
+		.booking-date {
+			font-size: 24px;
+			font-weight: bold;
+			color: $uni-text-color-normal;
+		}
+		.booking-time {
+			color: $uni-text-color-normal;
+			font-weight: bold;
+			margin-right: 10px;
+			padding-bottom: 20px;
+			.booking-time_text {
+				font-size: 20px;
+			}
+		}
+		.booking-list {
+			color: $uni-font-color-grey;
+			text-align: left;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			.booking-item {
+				width: 350rpx;
+				text-align-last: justify;
+				font-size: 14px;
+				font-weight: bold;
+			}
+		}
+		.booking-btns {
+			display: flex;
+			justify-content: space-evenly;
+			padding-top: 20px;
+			.booking-btn {
+				color: #FFFFFF;
+				width: 90px;
+				border-radius: 20px;
+				padding-top: 2px;
+				padding-bottom: 2px;
+			}
+			.booking-btn_cancel {
+				background-color: $uni-color-button-grey;
+			}
+			.booking-btn_ok {
+				background-color: $uni-color-botton;
+			}
+		}
 	}
 </style>
