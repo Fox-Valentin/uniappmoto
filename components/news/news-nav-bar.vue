@@ -2,11 +2,11 @@
 	<view>
 		<uni-nav-bar :fixed="true" :statusBar="true" :border="false" @click-right="openAdd">
 			<!-- 左边 -->
-			<block slot="left">
+			<!-- <block slot="left">
 				<view class="nav-left">
 					<view class="icon iconfont icon-qiandao"></view>
 				</view>
-			</block>
+			</block> -->
 			<!-- 中间 -->
 			<view class="nav-tab-bar u-f-ajc">
 				<block v-for="(tab,index) in tabBars" :key="tab.id">
@@ -21,7 +21,7 @@
 			<!-- 右边 -->
 			<block slot="right">
 				<view class="nav-right u-f-ajc">
-					<view class="icon iconfont icon-bianji1"></view>
+					<uni-icons type="more-filled" size="26"></uni-icons>
 				</view>
 			</block>
 		</uni-nav-bar>
@@ -52,7 +52,7 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .nav-left>view,.nav-right>view{
 	font-size: 40upx;
 }
@@ -69,10 +69,11 @@
 	width: 100%;
 	margin-left: -20upx;
 	position: relative;
+	height: 44px;
 }
 .nav-tab-bar>view{
-	font-size: 32upx;
-	padding: 0 15upx;
+	font-size: 30upx;
+	padding: 0 35upx;
 	font-weight: bold;
 	color: #969696;
 }
@@ -80,11 +81,11 @@
 	color: #333333!important;
 }
 .nav-tab-bar-line{
-	border-bottom: 5upx solid #FEDE33;
-	border-top: 5upx solid #FEDE33;
+	border-bottom: 6upx solid $uni-color-botton;
 	width: 70upx;
 	border-radius: 20upx;
 	position: absolute;
 	bottom: 12upx;
 }
+
 </style>

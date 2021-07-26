@@ -8,7 +8,7 @@
 				<!-- 左边按钮 -->
 				<view class="uni-navbar__header-btns" @tap="onClickLeft">
 					<view v-if="leftIcon.length">
-						<uni-icon :type="leftIcon" :color="color" size="24"></uni-icon>
+						<uni-icons :type="leftIcon" :color="color" size="24"></uni-icons>
 					</view>
 					<view v-if="leftText.length" class="uni-navbar-btn-text" :class="{'uni-navbar-btn-icon-left':!leftIcon.length}">{{leftText}}</view>
 					<slot name="left"></slot>
@@ -179,5 +179,10 @@
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
 		background-color: #c8c7cc
+	}
+	
+	.uni-navbar-btn-text {
+		font-size: 24upx;
+		color: #333;
 	}
 </style>

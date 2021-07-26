@@ -12,14 +12,18 @@
 		:style="{height:swiperheight+'px'}" 
 		:current="tabIndex"
 		@change="tabChange">
-			<!-- 关注 -->
+			<!-- 消息 -->
+			<swiper-item> 
+				111222
+			</swiper-item>
+			<!-- 社群 -->
 			<swiper-item> 
 				<scroll-view scroll-y class="list" @scrolltolower="loadmore()">
-					<block v-for="(item,index) in guanzhu.list" :key="index">
-						<common-list :item="item" :index="index"></common-list>
+					<block v-for="(item,index) in group.list" :key="index">
+						<group-list :item="item" :index="index"></group-list>
 					</block>
 					<!-- 上拉加载 -->
-					<load-more :loadtext="guanzhu.loadtext"></load-more>
+					<load-more :loadtext="group.loadtext"></load-more>
 				</scroll-view>
 			</swiper-item>
 			<!-- 话题 -->
@@ -57,14 +61,14 @@
 
 <script>
 	import newsNavBar from "../../components/news/news-nav-bar.vue";
-	import commonList from "../../components/common/common-list.vue";
+	import groupList from "../../components/common/group-list.vue";
 	import loadMore from "../../components/common/load-more.vue";
 	import topicNav from "../../components/news/topic-nav.vue";
 	import topicList from "../../components/news/topic-list.vue";
 	export default {
 		components:{
 			newsNavBar,
-			commonList,
+			groupList,
 			loadMore,
 			topicNav,
 			topicList
@@ -72,12 +76,13 @@
 		data() {
 			return {
 				swiperheight:500,
-				tabIndex:0,
+				tabIndex:1,
 				tabBars:[
-					{name:"关注",id:"guanzhu"},
-					{name:"话题",id:"topic"}
+					{name:"消息",id:"message"},
+					{name:"社群",id:"group"},
+					{name:"题库",id:"topic"}
 				],
-				guanzhu:{
+				group:{
 					loadtext:"上拉加载更多",
 					list:[
 						// 文字
@@ -232,9 +237,9 @@
 			},
 			// 上拉加载
 			loadmore(){
-				if(this.guanzhu.loadtext!="上拉加载更多"){ return; }
+				if(this.group.loadtext!="上拉加载更多"){ return; }
 				// 修改状态
-				this.guanzhu.loadtext="加载中...";
+				this.group.loadtext="加载中...";
 				// 获取数据
 				setTimeout(()=> {
 					//获取完成
@@ -253,8 +258,8 @@
 						commentnum:30,
 						goodnum:20
 					};
-					this.guanzhu.list.push(obj);
-					this.guanzhu.loadtext="上拉加载更多";
+					this.group.list.push(obj);
+					this.group.loadtext="上拉加载更多";
 				}, 1000);
 				// this.guanzhu.loadtext="没有更多数据了";
 			}
