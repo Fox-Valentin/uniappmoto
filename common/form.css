@@ -2,9 +2,9 @@
 .user-set-btn{
 	width: 100%;
 	margin: 20upx 0;
-	background: #FFE933!important;
+	background: #FFE933;
 	border: 0!important;
-	color: #333333!important;
+	color: #333333;
 }
 .user-set-btn-disable{
 	background: #F4F4F4!important;

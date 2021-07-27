@@ -261,7 +261,7 @@
         ,{
             "path" : "pages/user-set-userinfo/user-set-userinfo",
             "style" : {
-            	"navigationBarTitleText":"修改资料",
+            	"navigationBarTitleText":"账号管理",
             	"app-plus":{
             		"scrollIndicator":"none"
             	}
@@ -384,6 +384,51 @@
             }
             
         }
+        ,{
+            "path" : "pages/setList/setList",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置",
+                "enablePullDownRefresh": false,
+            	"app-plus":{
+            		"scrollIndicator":"none"
+            	}
+            }
+            
+        }
+        ,{
+            "path" : "pages/set-phone/set-phone",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "手机号",
+                "enablePullDownRefresh": false,
+            	"app-plus":{
+            		"scrollIndicator":"none"
+            	}
+            }
+            
+        }
+        ,{
+            "path" : "pages/user-qr/user-qr",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的二维码",
+                "enablePullDownRefresh": false,
+            	"app-plus":{
+            		"scrollIndicator":"none"
+            	}
+            }
+            
+        }
+        ,{
+            "path" : "pages/mileage-counter/mileage-counter",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -416,7 +461,7 @@
 				"selectedIconPath":"/static/tabbar/papered.png"
 			},
 			{
-				"pagePath":"pages/home/home",
+				"pagePath":"pages/mileage-counter/mileage-counter",
 				"text":"我的",
 				"iconPath":"/static/tabbar/home.png",
 				"selectedIconPath":"/static/tabbar/homeed.png"

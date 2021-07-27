@@ -1,10 +1,16 @@
 <template>
 	<view class="body">
-		
 		<view class="user-set-userinfo-list u-f-ac u-f-jsb">
 			<view>头像</view>
 			<view class="u-f-ac" @tap="changeimg">
 				<image :src="userpic" mode="aspectFill" lazy-load></image>
+				<view class="icon iconfont icon-bianji1"></view>
+			</view>
+		</view>
+		<view class="user-set-userinfo-list u-f-ac u-f-jsb">
+			<view>手机号</view>
+			<view class="u-f-ac" @tap="changeTel">
+				<view>{{phone}}</view>
 				<view class="icon iconfont icon-bianji1"></view>
 			</view>
 		</view>
@@ -31,27 +37,27 @@
 			</view>
 			</picker>
 		</view>
-		<view class="user-set-userinfo-list u-f-ac u-f-jsb">
+<!-- 		<view class="user-set-userinfo-list u-f-ac u-f-jsb">
 			<view>职业</view>
 			<view class="u-f-ac" @tap="changeOne('qg')">
 				<view>{{qg}}</view>
 				<view class="icon iconfont icon-bianji1"></view>
 			</view>
-		</view>
-		<view class="user-set-userinfo-list u-f-ac u-f-jsb">
+		</view> -->
+<!-- 		<view class="user-set-userinfo-list u-f-ac u-f-jsb">
 			<view>情感</view>
 			<view class="u-f-ac" @tap="changeOne('job')">
 				<view>{{job}}</view>
 				<view class="icon iconfont icon-bianji1"></view>
 			</view>
-		</view>
-		<view class="user-set-userinfo-list u-f-ac u-f-jsb">
+		</view> -->
+<!-- 		<view class="user-set-userinfo-list u-f-ac u-f-jsb">
 			<view>家乡</view>
 			<view class="u-f-ac" @tap="showMulLinkageThreePicker">
 				<view>{{pickerText}}</view>
 				<view class="icon iconfont icon-bianji1"></view>
 			</view>
-		</view>
+		</view> -->
 		
 		<button class="user-set-btn" 
 		type="primary" @tap="submit">完成</button>
@@ -81,6 +87,7 @@
 				birthday:"1987-02-07",
 				cityPickerValueDefault: [0, 0, 1],
 				pickerText: '广东省-广州市-白云区',
+				phone: '15689748596'
 			}
 		},
 		onBackPress() {
@@ -120,7 +127,7 @@
 					count:1,
 					sizeType:['compressed'],
 					success: (res) => {
-						this.userpic=res.tempFilePaths;
+						this.userpic=res.tempFilePaths[0];
 					}
 				})
 			},
@@ -172,12 +179,15 @@
 				month = month > 9 ? month : '0' + month;;
 				day = day > 9 ? day : '0' + day;
 				return `${year}-${month}-${day}`;
-			}
+			},
+			changeTel() {
+				console.log(123)
+			},
 		}
 	}
 </script>
 
-<style>
+<style lang="scss">
 @import "../../common/form.css";
 .user-set-userinfo-list{
 	padding: 20upx;
@@ -199,5 +209,10 @@
 .user-set-userinfo-list>view:last-child>view:last-of-type{
 	margin-left: 20upx;
 	color: #9B9B9B;
+}
+.user-set-btn {
+	background-color: $uni-color-botton;
+	color: #FFFFFF;
+	border-radius: 50rpx;
 }
 </style>

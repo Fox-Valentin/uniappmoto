@@ -47,7 +47,11 @@
 		}
 	}
 </script>
-
+<style lang="scss">
+	page {
+		background-color: $uni-page-bg-color;
+	}
+</style>
 <style scoped lang="scss">
 	.booking-result {
 		display: flex;
@@ -119,8 +123,5 @@
 		.booking-tips_title {
 			color: #FC9186;
 		}
-	}
-	page {
-		background-color: $uni-page-bg-color;
 	}
 </style>

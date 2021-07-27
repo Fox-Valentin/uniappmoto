@@ -8,7 +8,10 @@
 			</uni-list-item>
 			<uni-list-item title="人数" link>
 				<template slot="footer">
-					<uni-number-box :min="0" :max="9"></uni-number-box>
+					<!-- <uni-number-box :min="0" :max="9"></uni-number-box> -->
+					<picker mode="selector" :range="numRange" @change="numChange" >
+						<view>{{num}}</view>
+					</picker>
 				</template>
 			</uni-list-item>
 			<uni-list-item>
@@ -77,6 +80,8 @@
 		data() {
 			return {
 				date: null,
+				num: 1,
+				numRange: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			}
 		},
 		methods: {
@@ -84,6 +89,9 @@
 				// open 方法传入参数 等同在 uni-popup 组件上绑定 type属性
 				this.$refs.popup.open(type)
 			},
+			numChange(e) {
+				this.num = this.numRange[e.target.value];
+			}
 		}
 	}
 </script>
