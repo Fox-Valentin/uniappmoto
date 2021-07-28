@@ -85,19 +85,19 @@ export default {
 	},
 	// 上传图片
 	upload(url,options = {}){
-		options.url = this.config.baseUrl+url;
-		options.header = options.header || this.config.header;
+		// options.url = this.config.baseUrl+url;
+		options.url = url;
+		options.name = options.name || "file";
 		options.fileType = options.fileType || "image";
-		options.formData = options.formData || {};
-		options.filePath = options.filePath;
-		options.name = options.name;
+		const token = store.state.token || options.token;
+		
 		// TODO：token增加等操作
-		if (options.token) {
+		if (token) {
 			// 验证是否登录
-			if (!this.checkToken(options.checkToken)) return;
-			// 验证权限
-			if (!this.checkAuth(options.checkAuth)) return; 
-			options.header.token = User.token;
+			if (!this.checkToken(token)) return;
+			options.header = {
+				Authorization: `Bearer ${token}`,
+			};
 		}
 		
 		return uni.uploadFile(options);
@@ -118,7 +118,7 @@ export default {
 	},
 	// 验证用户是否登录
 	checkToken(checkToken){
-		if (checkToken) {
+		if (!checkToken) {
 			uni.showToast({ title: '请先登录', icon:"none" })
 			uni.navigateTo({
 				url: '/pages/login/login'

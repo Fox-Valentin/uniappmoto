@@ -128,6 +128,14 @@
 					sizeType:['compressed'],
 					success: (res) => {
 						this.userpic=res.tempFilePaths[0];
+						this.$http.upload("/api/app/api/user/uploadAvatar",
+						// this.$http.upload("/api/file/upload",
+						{
+							token: "e8160afd-18f6-42b9-a87a-6fda675cd504",
+							filePath: this.userpic
+						}).then(result => {
+							console.log(result)
+						})
 					}
 				})
 			},
