@@ -19,7 +19,7 @@ export default {
 		const token = store.state.token || options.token;
 		// ifToken 是否验证token
 		if(ifToken === true) {
-			if (!this.checkToken(options.checkToken)) return;
+			if (!this.checkToken(token)) return;
 		}
 		if (token) {
 			options.header = {
