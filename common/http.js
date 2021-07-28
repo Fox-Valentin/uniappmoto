@@ -11,39 +11,77 @@ export default {
 		method: "GET",
 		dataType: "json",
 	},
-	request(options = {}) {
+	request(options = {}, ifToken=true) {
 		options.header = options.header || this.config.header;
 		options.method = options.method || this.config.method;
 		options.dataType = options.dataType || this.config.dataType;
 		// options.url = this.config.domain+options.url;
-		const token = store.state.token;
+		const token = store.state.token || options.token;
+		// ifToken 是否验证token
+		if(ifToken === true) {
+			if (!this.checkToken(options.checkToken)) return;
+		}
 		if (token) {
 			options.header = {
 				Authorization: `Bearer ${token}`,
 				...options.header,
 			}
 		}
-		// TODO：token增加等操作
-		if (options.token) {
-			// 验证用户是否登录
-			if (!this.checkToken(options.checkToken)) return;
-			// 验证用户操作权限（验证是否绑定手机号码）
-			// if (!this.checkAuth(options.checkAuth)) return;
-			options.header.token = User.token;
-		}
 		return uni.request(options);
 	},
-	get(url,data,options={}){
+	get(url,data,options={},ifToken=true){
 		options.url = url;
 		options.data = data;
 		options.method = 'GET';
-		return this.request(options);
+		return this.request(options,ifToken).then(result => {
+			const [error, res] = result;
+			if(error) {
+				this.errorCheck(error, res)
+			} else {
+				const {data} = res;
+				if(data.code === 200) {
+					return data.data;
+				} else {
+					if(data.code === 401) {
+						uni.showToast({ title: '请先登录', icon:"none" })
+						uni.navigateTo({
+							url: '/pages/login/login'
+						});
+						return null;
+					} else {
+						uni.showToast({ title: data.msg,icon:"none" });
+						return null;
+					}
+				}
+			}
+		});
 	},
-	post(url,data,options={}){
+	post(url,data,options={},ifToken=true){
 		options.url = url;
 		options.data = data;
 		options.method = 'POST';
-		return this.request(options);
+		return this.request(options,ifToken).then(result => {
+			const [error, res] = result;
+			if(error) {
+				this.errorCheck(error, res)
+			} else {
+				const {data} = res;
+				if(data.code === 200) {
+					return data.data;
+				} else {
+					if(data.code === 401) {
+						uni.showToast({ title: '请先登录', icon:"none" })
+						uni.navigateTo({
+							url: '/pages/login/login'
+						});
+						return null;
+					} else {
+						uni.showToast({ title: data.msg,icon:"none" });
+						return null;
+					}
+				}
+			}
+		});
 	},
 	// 上传图片
 	upload(url,options = {}){
@@ -80,7 +118,7 @@ export default {
 	},
 	// 验证用户是否登录
 	checkToken(checkToken){
-		if (checkToken && !User.token) {
+		if (checkToken) {
 			uni.showToast({ title: '请先登录', icon:"none" })
 			uni.navigateTo({
 				url: '/pages/login/login'

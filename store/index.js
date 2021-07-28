@@ -7,7 +7,7 @@ const store = new Vuex.Store({
 	// 数据源
 	state: {
 		userinfo: uni.getStorageSync('USERINFO') || {},
-		token: uni.getStorageSync('TOKEN') || null,
+		token: uni.getStorageSync('TOKEN') || "",
 		historyLists: uni.getStorageSync("__history") || []
 	},
 	mutations: {

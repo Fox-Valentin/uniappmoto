@@ -1,4 +1,4 @@
-import $http from "./request.js";
+import $http from "./http.js";
 import store from '../store/index.js';
 export default {
 	// 用户token 测试token：4cd36bf70649475ac0cd6fae78250954474a4350
@@ -53,24 +53,18 @@ export default {
 			return false;
 		}
 		// 登录成功 保存状态
-		this.token = res.data.data.token;
-		this.userinfo = this.__formatUserinfo(res.data.data);
-		// 本地存储
-		uni.setStorageSync("userinfo",this.userinfo);
-		uni.setStorageSync("token", this.token);
-		// 获取用户相关统计
-		await this.getCounts();
-		// 连接socket
-		if (this.userinfo.id) {
-			$chat.Open();
-		}
+		this.token = res.data.data.access_token;
+		store.dispatch('set_token', this.token);
+		this.userinfo = await this.getUserInfo()
+		store.dispatch('set_userinfo', this.userinfo)
+		// this.userinfo = this.__formatUserinfo(res.data.data);
 		// 成功提示
 		uni.hideLoading();
 		uni.showToast({ title: '登录成功' });
 		// 返回上一步
-		if (!options.Noback) {
-			uni.navigateBack({ delta: 1 });
-		}
+		// if (!options.Noback) {
+		// 	uni.navigateBack({ delta: 1 });
+		// }
 		return true;
 	},
 	// 退出登录
@@ -220,6 +214,10 @@ export default {
 			avatarUrl:options.userInfo.avatarUrl,
 		}
 	},
+	// 获取用户信息
+	getUserInfo(options={}) {
+		return $http.get('/api/app/api/user/info', null, options)
+	}
 }
 
 

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+	import $user from '../../common/user.js'
 	export default {
 		data() {
 			return {
@@ -13,15 +14,20 @@
 		},
 		methods: {
 			start() {
-				const url = "/api/auth/app/user/login";
-				const data = {
-						"phoneNumber": 18220154658,
-						"captcha": "000000"
-				};
-				this.$http.post(url, data).then(result => {
-					var [error, res]  = result;
-					console.log(res.data); 
+				$user.getUserInfo({
+					token: "5adb359c-911b-4455-a030-3fbf8a6da628" 
+				}).then(data => {
+					console.log('res',data)
 				})
+				// const url = "/api/auth/app/user/login";
+				// const data = {
+				// 		"phoneNumber": 18220154658,
+				// 		"captcha": "000000"
+				// };
+				// this.$http.post(url, data).then(result => {
+				// 	var [error, res]  = result;
+				// 	console.log(res.data); 
+				// })
 				// var step = uni.requireNativePlugin('DC-StepCounter');
 				// var globalEvent = uni.requireNativePlugin('globalEvent');
 				// // 监听globalEvent事件 StepCounter_Ready 在ready后调用计步器相关API

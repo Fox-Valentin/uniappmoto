@@ -5,16 +5,19 @@
 		<!-- 关闭按钮 -->
 		<view class="icon iconfont icon-guanbi" @tap="back"></view>
 		<!-- 引入背景图 -->
-		<image class="loginhead" src="../../static/common/loginhead.png" mode="widthFix" lazy-load></image>
+		<!-- <image class="loginhead" src="../../static/common/loginhead.png" mode="widthFix" lazy-load></image> -->
 		<!-- 输入框+按钮 -->
-		<view class="body">
-			
+		<view class="body-wrapper">
+			<view class="title-wrapper">
+				<view class="title-text">
+					手 机 号 登 录
+				</view>
+			</view>
 			<!-- 账号密码登录 -->
 			<template v-if="!status">
-				<input type="text" v-model="username"
+				<input type="text" v-model="phoneNumber"
 				class="uni-input common-input"
-				placeholder="昵称/手机号/邮箱" />
-				
+				placeholder="手机号" />
 				<view class="login-input-box">
 					<input type="text" v-model="password"
 					class="uni-input common-input forget-input"
@@ -28,7 +31,7 @@
 			<template v-else>
 				<view class="login-input-box">
 					<view class="phone u-f-ajc">+86</view>
-					<input type="text" v-model="phone"
+					<input type="text" v-model="phoneNumber"
 					class="uni-input common-input phone-input"
 					placeholder="手机号" />
 				</view>
@@ -50,10 +53,10 @@
 		</view>
 		
 		<!-- 登录状态切换 -->
-		<view class="login-status u-f-ajc login-padding login-font-color" 
+		<!-- <view class="login-status u-f-ajc login-padding login-font-color" 
 		@tap="changeStatus">
 			{{status?'账号密码登录':'验证码登录'}}<view class="icon iconfont icon-jinru login-font-color"></view>
-		</view>
+		</view> -->
 		
 		<!-- 第三方登陆 -->
 		<view class="other-login-title u-f-ajc login-padding login-font-color">第三方登录</view>
@@ -77,18 +80,18 @@
 		},
 		data() {
 			return {
-				status:false,//false代表账号密码登录，true代表手机验证码登录
+				status:true,//false代表账号密码登录，true代表手机验证码登录
 				disabled:true,
 				loading:false,
-				username:"",
+				phoneNumber:"18220154658",
 				password:"",
 				phone:"",
-				checknum:"",
+				checknum:"000000",
 				codetime:0,
 			}
 		},
 		watch:{
-			username(val){
+			phoneNumber(val){
 				this.OnBtnChange();
 			},
 			password(val){
@@ -105,7 +108,7 @@
 			// 验证手机号码
 			isPhone(){
 				let mPattern = /^1[34578]\d{9}$/; 
-				return mPattern.test(this.phone);
+				return mPattern.test(this.phoneNumber);
 			},
 			// 获取验证码
 			getCheckNum(){
@@ -138,7 +141,7 @@
 			},
 			// 改变按钮状态
 			OnBtnChange(){
-				if( (this.username && this.password)||(this.phone && this.checknum) ){
+				if(this.phoneNumber && this.checknum){
 					this.disabled=false; return;
 				}
 				this.disabled=true;
@@ -168,7 +171,13 @@
 					});
 					return;
 				}
-				console.log("提交登录")
+				this.User.login({
+					url: "/api/auth/app/user/login",
+					data: {
+						phoneNumber: this.phoneNumber,
+						captcha: this.checknum
+					}
+				});
 			}
 		}
 	}
@@ -236,4 +245,19 @@
 	width: 150upx;
 	padding: 10upx 0;
 }
+.title-wrapper {
+	height: 400rpx;
+	display: flex;
+	align-items: flex-end;
+	padding-bottom: 100rpx;
+}
+</style>
+<style lang="scss">
+	.body-wrapper {
+		padding: 0 50rpx;
+	}
+	.title-text {
+		font-size: 50rpx;
+		color: $uni-font-color-title;
+	}
 </style>

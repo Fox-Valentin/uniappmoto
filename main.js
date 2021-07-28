@@ -13,6 +13,9 @@ Vue.prototype.lib=lib
 import $http from './common/http.js'
 Vue.prototype.$http=$http
 
+import User from "./common/user.js"
+Vue.prototype.User = User
+
 App.mpType = 'app'
 
 const app = new Vue({
