@@ -10,13 +10,15 @@ export default {
 		data: {},
 		method: "GET",
 		dataType: "json",
+		token: "a3896460-f924-400c-8dde-0f22c50a2ccd"
 	},
 	request(options = {}, ifToken=true) {
 		options.header = options.header || this.config.header;
 		options.method = options.method || this.config.method;
 		options.dataType = options.dataType || this.config.dataType;
+		options.token = options.token || this.config.token || store.state.token;
 		// options.url = this.config.domain+options.url;
-		const token = store.state.token || options.token;
+		const token = options.token;
 		// ifToken 是否验证token
 		if(ifToken === true) {
 			if (!this.checkToken(token)) return;
@@ -27,6 +29,7 @@ export default {
 				...options.header,
 			}
 		}
+		console.log('options', options)
 		return uni.request(options);
 	},
 	get(url,data,options={},ifToken=true){
@@ -89,7 +92,8 @@ export default {
 		options.url = url;
 		options.name = options.name || "file";
 		options.fileType = options.fileType || "image";
-		const token = store.state.token || options.token;
+		options.token = options.token || this.config.token || store.state.token;
+		const token = options.token;
 		
 		// TODO：token增加等操作
 		if (token) {
@@ -100,7 +104,34 @@ export default {
 			};
 		}
 		
-		return uni.uploadFile(options);
+		return uni.uploadFile(options).then(result => {
+			const [error, res] = result;
+			if(error) {
+				this.errorCheck(error, res)
+			} else {
+				let {data} = res;
+				try{
+					data = JSON.parse(data);
+				}catch(e){
+					uni.showToast({ title: '上传数据出错', icon:"none" })
+					return;
+				}
+				if(data.code === 200) {
+					return data.data;
+				} else {
+					if(data.code === 401) {
+						uni.showToast({ title: '请先登录', icon:"none" })
+						uni.navigateTo({
+							url: '/pages/login/login'
+						});
+						return null;
+					} else {
+						uni.showToast({ title: data.msg,icon:"none" });
+						return null;
+					}
+				}
+			}
+		});;
 	},
 	// 错误处理
 	errorCheck(err,res,errfun = false,resfun = false){

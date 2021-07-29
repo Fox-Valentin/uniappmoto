@@ -9,9 +9,9 @@
 		</view>
 		<view class="user-set-userinfo-list u-f-ac u-f-jsb">
 			<view>手机号</view>
-			<view class="u-f-ac" @tap="changeTel">
+			<view class="u-f-ac">
 				<view>{{phone}}</view>
-				<view class="icon iconfont icon-bianji1"></view>
+				<view class="icon iconfont icon-liulan"></view>
 			</view>
 		</view>
 		<view class="user-set-userinfo-list u-f-ac u-f-jsb">
@@ -63,31 +63,28 @@
 		type="primary" @tap="submit">完成</button>
 		
 		
-		<mpvue-city-picker themeColor="#007AFF" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValueDefault" @onConfirm="onConfirm"></mpvue-city-picker>
+		<!-- <mpvue-city-picker themeColor="#007AFF" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValueDefault" @onConfirm="onConfirm"></mpvue-city-picker> -->
 		
 	</view>
 </template>
 
 <script>
-	let sex=['不限','男','女'];
+	let sex=['保密','男','女'];
 	let qg=['秘密','未婚','已婚'];
 	let job=['秘密','IT','老师'];
-	import mpvueCityPicker from "../../components/mpvue-citypicker/mpvueCityPicker.vue";
+	// import mpvueCityPicker from "../../components/mpvue-citypicker/mpvueCityPicker.vue";
+	import tool from "../../common/tool.js"
 	export default {
 		components:{
-			mpvueCityPicker
+			// mpvueCityPicker
 		},
 		data() {
 			return {
-				userpic:"../../static/demo/userpic/11.jpg",
+				userpic:"http://222.90.83.242:17007/motopark/avatar/2021/07/29/4d88ba52-048f-421b-a661-a4070ae109b5.jpeg",
 				username:"哈哈哈",
 				sex:"不限",
-				qg:"未婚",
-				job:"IT",
 				birthday:"1987-02-07",
-				cityPickerValueDefault: [0, 0, 1],
-				pickerText: '广东省-广州市-白云区',
-				phone: '15689748596'
+				phone: '18288888888',
 			}
 		},
 		onBackPress() {
@@ -109,6 +106,15 @@
 				return this.getDate('end');
 			}
 		},
+		onLoad() {
+			this.User.getUserInfo().then(data => {
+				this.userpic = data.avatar;
+				this.username = data.nickName;
+				this.birthday = data.birth;
+				this.phone = data.phoneNumber;
+				this.sex = sex[data.gender];
+			})
+		},
 		methods: {
 			// 三级联动
 			showMulLinkageThreePicker() {
@@ -129,49 +135,32 @@
 					success: (res) => {
 						this.userpic=res.tempFilePaths[0];
 						this.$http.upload("/api/app/api/user/uploadAvatar",
-						// this.$http.upload("/api/file/upload",
 						{
-							token: "e8160afd-18f6-42b9-a87a-6fda675cd504",
 							filePath: this.userpic
 						}).then(result => {
-							console.log(result)
+							this.userpic = result;
 						})
 					}
 				})
 			},
 			// 单列选择
 			changeOne(val){
-				let arr=[];
-				switch (val){
-					case 'sex':
-					arr=sex;
-						break;
-					case 'qg':
-					arr=qg;
-						break;
-					case 'job':
-					arr=job;
-						break;
-				}
 				uni.showActionSheet({
-					itemList: arr,
+					itemList: sex,
 					success: res => {
-						switch (val){
-							case 'sex':
-							this.sex=arr[res.tapIndex];
-								break;
-							case 'qg':
-							this.qg=arr[res.tapIndex];
-								break;
-							case 'job':
-							this.job=arr[res.tapIndex];
-								break;
-						}
+						this.sex=arr[res.tapIndex];
 					},
 				});
 			},
 			submit(){
-				
+				const url = "/api/app/api/user/saveInfo";
+				const data = this.formatValue();
+				this.$http.post(url, data).then(res => {
+					uni.showToast({ title: '保存成功', icon:"none" })
+					this.User.getUserInfo().then(data => {
+						this.$store.dispatch('set_userinfo', data);
+					})
+				})
 			},
 			getDate(type) {
 				const date = new Date();
@@ -188,9 +177,45 @@
 				day = day > 9 ? day : '0' + day;
 				return `${year}-${month}-${day}`;
 			},
-			changeTel() {
-				console.log(123)
+			validateValue() {
+				this.username = this.username.trim();
+				if(!this.username) {
+					uni.showToast({ title: '请填写昵称', icon:"none" })
+					return false;
+				}
+				if(this.sex) {
+					uni.showToast({ title: '请选择性别', icon:"none" })
+					return false;
+				}
+				if(this.birthday) {
+					uni.showToast({ title: '请选择生日', icon:"none" })
+					return false;
+				}
+				return true;
 			},
+			formatValue() {
+				// '保密','男','女'
+				const data = {
+					Birth: this.birthday,
+					Gender: 0,
+					nickName: this.username,
+					Avatar: this.userpic
+				}
+				switch (this.sex){
+					case '保密':
+						data.Gender = 0;
+						break;
+					case '男':
+						data.Gender = 1;
+						break;
+					case '女':
+						data.Gender = 2;
+						break;
+					default:
+						break;
+				}
+				return data;
+			}
 		}
 	}
 </script>

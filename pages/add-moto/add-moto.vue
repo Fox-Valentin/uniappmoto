@@ -1,18 +1,18 @@
 <template>
 	<view>
 		<view class="forms-wrapper">
-			<uni-forms>
-				<uni-forms-item :labelWidth="100" label="品牌:"  name="name">
-					<uni-easyinput :inputBorder="false" class="form-item" placeholder="请输入品牌"></uni-easyinput>
+			<uni-forms ref="form" :modelValue="formData" :rules="rules">
+				<uni-forms-item :labelWidth="100" label="品牌:"  name="Brand">
+					<uni-easyinput :clearable="false" :inputBorder="false" v-model="formData.Brand" :trim="true" class="form-item" placeholder="请输入品牌"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item :labelWidth="100" label="型号:"  name="age">
-					<uni-easyinput :inputBorder="false" class="form-item" placeholder="请输入型号"></uni-easyinput>
+				<uni-forms-item :labelWidth="100" label="型号:"  name="Type">
+					<uni-easyinput :clearable="false" :inputBorder="false" v-model="formData.Type" :trim="true" class="form-item" placeholder="请输入型号"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item :labelWidth="100" label="车牌号:"  name="name">
-					<uni-easyinput :inputBorder="false" class="form-item" placeholder="请输入车牌号"></uni-easyinput>
+				<uni-forms-item :labelWidth="100" label="车牌号:"  name="motoNum">
+					<uni-easyinput :clearable="false" :inputBorder="false" v-model="formData.motoNum" :trim="true" class="form-item" placeholder="请输入车牌号"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item :labelWidth="100" label="其他参数:"  name="age">
-					<uni-easyinput :inputBorder="false"  class="form-item" placeholder="请输入其他参数"></uni-easyinput>
+				<uni-forms-item :labelWidth="100" label="其他参数:"  name="others">
+					<uni-easyinput :clearable="false" :inputBorder="false"  :trim="true" class="form-item" placeholder="请输入其他参数"></uni-easyinput>
 				</uni-forms-item>
 			</uni-forms>
 			<view class="">
@@ -29,10 +29,11 @@
 				    @progress="progress" 
 				    @success="success" 
 				    @fail="fail"
+					@delete="deleleImg"
 				/>
 			</view>
 			<view class="uni-padding-wrap uni-common-mt">
-				<button type="primary" class="book-btn" hover-class="book-btn-hover">保存</button>
+				<button type="primary" class="book-btn" hover-class="book-btn-hover" @click="submit">保存</button>
 			</view>
 		<!-- 	<view class="">
 				<image :src="urls[0]" @click="clk(0)"></image>
@@ -45,10 +46,11 @@
 </template>
 
 <script>
-    import avatar from "../../components/yq-avatar/yq-avatar.vue";
+    // import avatar from "../../components/yq-avatar/yq-avatar.vue";
+	import tool from "../../common/tool.js"
 	export default {
         components: {
-            avatar
+            // avatar
         },
 		computed: {
 			imgAccount() {
@@ -64,8 +66,34 @@
 		},
 		data() {
 			return {
-				urls: ["../../static/demo/1.jpg","../../static/demo/1.jpg"],
+				urls: [],
 				imageValue:[],
+				formData: {
+					Brand: "",
+					Type: "",
+					motoNum: "",
+					Pic: ""
+				},
+				rules: {
+					Brand: {
+						rules: [{
+								required: true,
+								errorMessage: '请输入品牌',
+							}]
+					},
+					Type: {
+						rules: [{
+								required: true,
+								errorMessage: '请输入型号',
+							}]
+					},
+					motoNum: {
+						rules: [{
+								required: true,
+								errorMessage: '请输入车牌号',
+							}]
+					},
+				},
 			}
 		},
 		methods: {
@@ -81,6 +109,11 @@
             // 获取上传状态
             select(e){
                 console.log('选择文件：',e)
+				this.$http.upload("/api/app/api/user/moto/picture", {
+					filePath: e.tempFilePaths[0]
+				}).then(result => {
+					this.imageValue.push(tool.formatFile(result))
+				})
             },
             // 获取上传进度
             progress(e){
@@ -96,7 +129,41 @@
             },
 			onClick() {
 				console.log('跳转')
-			}
+			},
+			deleleImg(e) {
+				// {
+				//      "name":"file.txt",
+				//      "extname":"txt",
+				//      "url":"https://xxxx",
+				//      // ...
+				//  }
+				try{
+					this.imageValue.forEach((img, index) => {
+						if(img.name === e.tempFile.name) {
+							this.imageValue.splice(index, 1);
+						}
+					})
+				}catch(e){
+					//TODO handle the exception
+					console.log(e)
+				}
+			},
+			submit() {
+				this.$refs.form.validate().then(res=>{
+					let Pic = [];
+					this.imageValue.forEach((img, index) => {
+						Pic.push(img.url);
+					})
+					const data = {
+						...res,
+						Pic: Pic.join(","),
+					}
+					this.$http.post("/api/app/api/user/moto", data).then(res => {
+						uni.showToast({ title: '保存成功', icon:"none" })
+					})
+				}).catch(err =>{
+				})
+			},
 		}
 	}
 </script>
