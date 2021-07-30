@@ -43,7 +43,7 @@ export default {
 			} else {
 				const {data} = res;
 				if(data.code === 200) {
-					return data.data;
+					return data.data || data.rows;
 				} else {
 					if(data.code === 401) {
 						uni.showToast({ title: '请先登录', icon:"none" })
@@ -71,6 +71,60 @@ export default {
 				const {data} = res;
 				if(data.code === 200) {
 					return data.data;
+				} else {
+					if(data.code === 401) {
+						uni.showToast({ title: '请先登录', icon:"none" })
+						uni.navigateTo({
+							url: '/pages/login/login'
+						});
+						return null;
+					} else {
+						uni.showToast({ title: data.msg,icon:"none" });
+						return null;
+					}
+				}
+			}
+		});
+	},
+	put(url,data,options={},ifToken=true){
+		options.url = url;
+		options.data = data;
+		options.method = 'PUT';
+		return this.request(options,ifToken).then(result => {
+			const [error, res] = result;
+			if(error) {
+				this.errorCheck(error, res)
+			} else {
+				const {data} = res;
+				if(data.code === 200) {
+					return data.data;
+				} else {
+					if(data.code === 401) {
+						uni.showToast({ title: '请先登录', icon:"none" })
+						uni.navigateTo({
+							url: '/pages/login/login'
+						});
+						return null;
+					} else {
+						uni.showToast({ title: data.msg,icon:"none" });
+						return null;
+					}
+				}
+			}
+		});
+	},
+	delete(url,data,options={},ifToken=true){
+		options.url = url;
+		options.data = data;
+		options.method = 'DELETE';
+		return this.request(options,ifToken).then(result => {
+			const [error, res] = result;
+			if(error) {
+				this.errorCheck(error, res)
+			} else {
+				const {data} = res;
+				if(data.code === 200) {
+					return data;
 				} else {
 					if(data.code === 401) {
 						uni.showToast({ title: '请先登录', icon:"none" })

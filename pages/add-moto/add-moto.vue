@@ -2,17 +2,20 @@
 	<view>
 		<view class="forms-wrapper">
 			<uni-forms ref="form" :modelValue="formData" :rules="rules">
-				<uni-forms-item :labelWidth="100" label="品牌:"  name="Brand">
-					<uni-easyinput :clearable="false" :inputBorder="false" v-model="formData.Brand" :trim="true" class="form-item" placeholder="请输入品牌"></uni-easyinput>
+				<uni-forms-item :labelWidth="100" label="品牌:"  name="brand">
+					<uni-easyinput :clearable="false" :inputBorder="false" v-model="formData.brand" :trim="true" class="form-item" placeholder="请输入品牌"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item :labelWidth="100" label="型号:"  name="Type">
-					<uni-easyinput :clearable="false" :inputBorder="false" v-model="formData.Type" :trim="true" class="form-item" placeholder="请输入型号"></uni-easyinput>
+				<uni-forms-item :labelWidth="100" label="型号:"  name="type">
+					<uni-easyinput :clearable="false" :inputBorder="false" v-model="formData.type" :trim="true" class="form-item" placeholder="请输入型号"></uni-easyinput>
 				</uni-forms-item>
 				<uni-forms-item :labelWidth="100" label="车牌号:"  name="motoNum">
 					<uni-easyinput :clearable="false" :inputBorder="false" v-model="formData.motoNum" :trim="true" class="form-item" placeholder="请输入车牌号"></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item :labelWidth="100" label="其他参数:"  name="others">
-					<uni-easyinput :clearable="false" :inputBorder="false"  :trim="true" class="form-item" placeholder="请输入其他参数"></uni-easyinput>
+				<uni-forms-item :labelWidth="100" label="发动机号:"  name="engineNum">
+					<uni-easyinput :clearable="false" :inputBorder="false" v-model="formData.engineNum"   :trim="true" class="form-item" placeholder="请输入其他参数"></uni-easyinput>
+				</uni-forms-item>
+				<uni-forms-item :labelWidth="100" label="车架号:"  name="frameNum">
+					<uni-easyinput :clearable="false" :inputBorder="false" v-model="formData.frameNum" :trim="true" class="form-item" placeholder="请输入其他参数"></uni-easyinput>
 				</uni-forms-item>
 			</uni-forms>
 			<view class="">
@@ -32,7 +35,7 @@
 					@delete="deleleImg"
 				/>
 			</view>
-			<view class="uni-padding-wrap uni-common-mt">
+			<view class="uni-common-mt">
 				<button type="primary" class="book-btn" hover-class="book-btn-hover" @click="submit">保存</button>
 			</view>
 		<!-- 	<view class="">
@@ -66,13 +69,16 @@
 		},
 		data() {
 			return {
+				id: null,
 				urls: [],
 				imageValue:[],
 				formData: {
-					Brand: "",
-					Type: "",
+					brand: "",
+					type: "",
 					motoNum: "",
-					Pic: ""
+					pic: "",
+					engineNum: "",
+					frameNum: "",
 				},
 				rules: {
 					Brand: {
@@ -94,6 +100,14 @@
 							}]
 					},
 				},
+			}
+		},
+		onLoad(option) {
+			// 判断是否携带id参数判断是否编辑
+			if(option.id) {
+				this.id = option.id;
+				// 回填数据
+				this.getDetail();
 			}
 		},
 		methods: {
@@ -150,19 +164,45 @@
 			},
 			submit() {
 				this.$refs.form.validate().then(res=>{
-					let Pic = [];
+					let pic = [];
 					this.imageValue.forEach((img, index) => {
-						Pic.push(img.url);
+						pic.push(img.url);
 					})
 					const data = {
 						...res,
-						Pic: Pic.join(","),
+						pic: pic.join(","),
 					}
-					this.$http.post("/api/app/api/user/moto", data).then(res => {
-						uni.showToast({ title: '保存成功', icon:"none" })
-					})
+					if(this.ifEdit()) {
+						this.$http.put("/api/app/api/user/moto", {...data, id: this.id}).then(res => {
+							uni.showToast({ title: '修改成功', icon:"none" })
+						})
+					} else {
+						this.$http.post("/api/app/api/user/moto", data).then(res => {
+							uni.showToast({ title: '保存成功', icon:"none" })
+						})
+					}
 				}).catch(err =>{
 				})
+			},
+			getDetail() {
+				this.$http.get(`/api/app/api/user/moto/${this.id}`).then(data => {
+					this.formData = {
+						brand: data.brand,
+						motoNum: data.motoNum,
+						type: data.type,
+						engineNum: data.engineNum,
+						frameNum: data.frameNum,
+					};
+					if(data.pic && data.pic.length > 0) {
+						const pics = data.pic.split(",");
+						pics.forEach(pic => {
+							this.imageValue.push(tool.formatFile(pic));
+						})
+					}
+				})
+			},
+			ifEdit() {
+				return this.id !== null ? true : false;
 			},
 		}
 	}
@@ -172,6 +212,7 @@
 	.forms-wrapper {
 		border-top: 6px solid $uni-page-bg-color;
 		padding-left: 30rpx;
+		padding-right: 30rpx;
 		padding-top: 30rpx;
 		/deep/ .label-text {
 			font-size: 16px;
