@@ -43,7 +43,7 @@ export default {
 			} else {
 				const {data} = res;
 				if(data.code === 200) {
-					return data.data || data.rows;
+					return data.data || data;
 				} else {
 					if(data.code === 401) {
 						uni.showToast({ title: '请先登录', icon:"none" })

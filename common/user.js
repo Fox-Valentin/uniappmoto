@@ -46,7 +46,7 @@ export default {
 	async login(options ={}){
 		uni.showLoading({ title: '登录中...', mask: true });
 		// 请求登录
-		let [err,res] = await $http.post(options.url,options.data);
+		let [err,res] = await $http.request({ ...options, method: 'POST' }, false);
 		// 登录失败
 		if (!$http.errorCheck(err,res)){
 			uni.hideLoading();
