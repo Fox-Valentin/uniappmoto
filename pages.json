@@ -429,6 +429,18 @@
             }
             
         }
+        ,{
+            "path" : "pages/index/index-info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "资讯详情",
+                "enablePullDownRefresh": false,
+				"app-plus":{
+					"scrollIndicator":"none"
+				}
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
