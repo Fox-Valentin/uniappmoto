@@ -1,6 +1,6 @@
 const validatePhone = function(phone) {
 		let mPattern = /^1[34578]\d{9}$/; 
-		return mPattern.test(this.phoneNumber);
+		return mPattern.test(phone);
 }
 
 // 讲上传图片转换为 uni file picker 的value格式

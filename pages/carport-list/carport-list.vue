@@ -41,7 +41,7 @@
 		methods: {
 			initList() {
 				this.$http.get("/api/app/api/user/moto/list").then(data => {
-					this.list = data;
+					this.list = data.rows;
 				})
 			},
 			handlePic(picStr) {

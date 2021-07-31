@@ -429,6 +429,33 @@
             }
             
         }
+        ,{
+            "path" : "pages/huo-dong-all/huo-dong-all",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "所有活动",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/huo-dong-detail/huo-dong-detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "活动详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/booked-list/booked-list",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的活动",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

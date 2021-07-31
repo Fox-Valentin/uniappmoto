@@ -1,22 +1,44 @@
 <template>
 	<view class="">
-		<scroll-view  class="scroll-view_H" scroll-x="true">
-			<view id="demo1" class="scroll-view-item_H guan-zhu_item" v-for="num in 10">
+		<view class="scroll-view_H">
+			<view id="demo1" class="scroll-view-item_H guan-zhu_item" v-for="item in list" :key="item.id">
 				<view class="image-wrapper">
-					<image src="../../static/demo/userpic/11.jpg" mode="widthFix" lazy-load></image>
+					<image :src="item.pic" lazy-load></image>
 				</view>
 				<view class="title">
-					篮球场
+					{{item.title}}
 				</view>
-				<view class="yuyue">
+				<view class="yuyue" @click="toYuyue(item.id)">
 					预约
 				</view>
 			</view>
-		</scroll-view>
+			</view>
 	</view>
 </template>
 
 <script>
+	export default {
+		data() {
+			return {
+				list: [],
+			}
+		},
+		mounted() {
+			this.initList();
+		},
+		methods: {
+			initList() {
+				this.$http.get("/api/app/api/activity/listSort").then(result => {
+					this.list = result;
+				})
+			},
+			toYuyue(id) {
+				uni.navigateTo({
+					url: `/pages/booking/booking?id=${id}`
+				})
+			},
+		},
+	}
 </script>
 
 <style scoped lang="scss">
@@ -24,17 +46,20 @@
 		white-space: nowrap;
 		width: 100%;
 		background-color: $uni-bg-color-grey;
-		box-sizing: border-box;
-		padding-left: 30rpx;
+		// box-sizing: border-box;
+		// padding-left: 30rpx;
+		padding-top: 30rpx;
+		padding-bottom: 30rpx;
+		display: flex;
+		justify-content: space-around;
 	}
 	.scroll-view-item_H {
 		display: inline-block;
-		width: 211rpx;
+		width: 230rpx;
 		height: 316rpx;
 		line-height: 300rpx; 
 		text-align: center;
 		font-size: 36rpx;
-		margin-right: 6px;
 		overflow: hidden;
 	}
 	.guan-zhu_item {
@@ -45,13 +70,11 @@
 		width: 100upx;
 		height: 100upx;
 		border-radius: 100%;
-		margin-right: 15upx;
 	}
 	.title {
 		color: $uni-text-color-normal;
 		font-size: 14px;
 		font-weight: bold;
-		white-space: break-spaces;
 		overflow: hidden;
 		text-align: center;
 		margin-left: 16px;

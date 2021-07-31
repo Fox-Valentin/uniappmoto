@@ -38,12 +38,6 @@
 			<view class="uni-common-mt">
 				<button type="primary" class="book-btn" hover-class="book-btn-hover" @click="submit">保存</button>
 			</view>
-		<!-- 	<view class="">
-				<image :src="urls[0]" @click="clk(0)"></image>
-				<image :src="urls[1]" @click="clk(1)"></image>
-				<button @click="clk(0)">按钮触发</button>
-				<avatar @upload="myUpload" ref="avatar"></avatar>
-			</view> -->
 		</view>
 	</view>
 </template>

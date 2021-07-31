@@ -111,7 +111,6 @@
 	}
 	.booking-qr {
 		line-height: 1;
-		// background: url(../../static/demo/userpic/qr-bg.png) no-repeat center center;
 		width: 500rpx;
 		height: 500rpx;
 		display: flex;
