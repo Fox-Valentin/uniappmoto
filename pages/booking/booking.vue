@@ -51,7 +51,7 @@
 			</uni-list-item>
 			<uni-list-item>
 				<template slot="header">
-					<uni-easyinput :clearable="false" v-model="formData.capcha" type="number" trim="all" class="input-wrapper" :inputBorder="false" placeholder="请输入验证码"></uni-easyinput>
+					<uni-easyinput :clearable="false" v-model="captcha" type="number" trim="all" class="input-wrapper" :inputBorder="false" placeholder="请输入验证码"></uni-easyinput>
 				</template>
 			</uni-list-item>
 		</uni-list>
@@ -110,10 +110,10 @@
 				endTime: '',
 				num: 1,
 				numRange: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+				captcha: '000000',
 				formData: {
 					activityId: null,
 					phone: '18288888888',
-					capcha: '000000',
 					contactName: null,
 					memberCount: null,
 					startReservedTime: null,
@@ -183,7 +183,7 @@
 				}
 			},
 			submit() {
-				this.$http.post("/api/app/api/appointment", this.formData).then(res=> {
+				this.$http.post("/api/app/api/appointment", {appointment: this.formData, captcha: this.captcha}).then(res=> {
 					console.log(res)
 				})
 			},
@@ -191,7 +191,6 @@
 				console.log(this.formData)
 				for (let value in this.formData) {
 					if(!this.formData[value]) {
-						console.log(value)
 						return false;
 					}
 				}
@@ -201,8 +200,8 @@
 				this.formData.activityId = this.id;
 				this.formData.memberCount = this.num;
 				this.date = moment(this.date).format("YYYY-MM-DD")
-				this.formData.startReservedTime = this.date + " " + this.rangeTime[0];
-				this.formData.endReservedTime = this.date + " " + this.rangeTime[1];
+				this.formData.startReservedTime = this.date + " " + this.rangeTime[0] + ":00";
+				this.formData.endReservedTime = this.date + " " + this.rangeTime[1] + ":00";
 			},
 		}
 	}

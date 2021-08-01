@@ -10,7 +10,7 @@ export default {
 		data: {},
 		method: "GET",
 		dataType: "json",
-		token: "a3896460-f924-400c-8dde-0f22c50a2ccd"
+		token: "99ad90fe-fae5-418c-b613-17260b41b30d"
 	},
 	request(options = {}, ifToken=true) {
 		options.header = options.header || this.config.header;

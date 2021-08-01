@@ -83,7 +83,7 @@
 				status:true,//false代表账号密码登录，true代表手机验证码登录
 				disabled:true,
 				loading:false,
-				phoneNumber:"18220154658",
+				phoneNumber:"18288888888",
 				password:"",
 				phone:"",
 				checknum:"000000",

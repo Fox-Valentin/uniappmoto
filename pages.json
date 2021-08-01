@@ -466,6 +466,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/home-label/home-label",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的标签",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/drive-history/drive-history",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "骑行历史",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
