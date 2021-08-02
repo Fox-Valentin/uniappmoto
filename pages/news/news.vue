@@ -18,7 +18,7 @@
 			</swiper-item>
 			<!-- 社群 -->
 			<swiper-item> 
-				<scroll-view scroll-y class="list" @scrolltolower="loadmore()">
+				<scroll-view scroll-y class="list" @scrolltolower="getGroup()">
 					<block v-for="(item,index) in group.list" :key="index">
 						<group-list :item="item" :index="index"></group-list>
 					</block>
@@ -77,85 +77,18 @@
 			return {
 				swiperheight:500,
 				tabIndex:1,
+				loadtextmore: '上拉加载更多',
+				loadtextloading: '加载中...',
+				loadtextover: '没有更多数据了',
 				tabBars:[
 					{name:"消息",id:"message"},
 					{name:"社群",id:"group"},
 					{name:"题库",id:"topic"}
 				],
 				group:{
+					pageNum: 0,
 					loadtext:"上拉加载更多",
-					list:[
-						// 文字
-						{
-							userpic:"../../static/demo/userpic/12.jpg",
-							username:"哈哈",
-							sex:0, //0 男 1 女
-							age:25,
-							isguanzhu:false,
-							title:"我是标题",
-							titlepic:"",
-							video:false,
-							share:false,
-							path:"深圳 龙岗",
-							sharenum:20,
-							commentnum:30,
-							goodnum:20
-						},
-						// 图文
-						{
-							userpic:"../../static/demo/userpic/12.jpg",
-							username:"哈哈",
-							sex:0, //0 男 1 女
-							age:25,
-							isguanzhu:false,
-							title:"我是标题",
-							titlepic:"../../static/demo/datapic/13.jpg",
-							video:false,
-							share:false,
-							path:"深圳 龙岗",
-							sharenum:20,
-							commentnum:30,
-							goodnum:20
-						},
-						// 视频
-						{
-							userpic:"../../static/demo/userpic/12.jpg",
-							username:"哈哈",
-							sex:0, //0 男 1 女
-							age:25,
-							isguanzhu:false,
-							title:"我是标题",
-							titlepic:"../../static/demo/datapic/13.jpg",
-							video:{
-								looknum:"20w",
-								long:"2:47"
-							},
-							share:false,
-							path:"深圳 龙岗",
-							sharenum:20,
-							commentnum:30,
-							goodnum:20
-						},
-						// 分享
-						{
-							userpic:"../../static/demo/userpic/12.jpg",
-							username:"哈哈",
-							sex:0, //0 男 1 女
-							age:25,
-							isguanzhu:false,
-							title:"我是标题",
-							titlepic:"",
-							video:false,
-							share:{
-								title:"我是分享的标题",
-								titlepic:"../../static/demo/datapic/14.jpg"
-							},
-							path:"深圳 龙岗",
-							sharenum:20,
-							commentnum:30,
-							goodnum:20
-						},
-					]
+					list:[]
 				},
 				topic:{
 					swiper:[
@@ -225,6 +158,7 @@
 					this.swiperheight=height;
 				}
 			});
+			this.getGroup()
 		},
 		methods:{
 			// 点击切换
@@ -235,34 +169,26 @@
 			tabChange(e){
 				this.tabIndex=e.detail.current;
 			},
-			// 上拉加载
-			loadmore(){
-				if(this.group.loadtext!="上拉加载更多"){ return; }
+			getGroup() {
+				if (this.group.loadtext != this.loadtextmore) {
+					return;
+				}
+				this.group.pageNum = this.group.pageNum + 1;
 				// 修改状态
-				this.group.loadtext="加载中...";
-				// 获取数据
-				setTimeout(()=> {
-					//获取完成
-					let obj={
-						userpic:"../../static/demo/userpic/12.jpg",
-						username:"哈哈",
-						sex:0, //0 男 1 女
-						age:25,
-						isguanzhu:false,
-						title:"我是标题",
-						titlepic:"../../static/demo/datapic/13.jpg",
-						video:false,
-						share:false,
-						path:"深圳 龙岗",
-						sharenum:20,
-						commentnum:30,
-						goodnum:20
-					};
-					this.group.list.push(obj);
-					this.group.loadtext="上拉加载更多";
-				}, 1000);
-				// this.guanzhu.loadtext="没有更多数据了";
-			}
+				this.group.loadtext = this.loadtextloading;
+				this.$http.get('/app/api/topic/topics/list', {
+					pageNum: this.group.pageNum,
+					pageSize: 10
+				}).then(data => {
+					this.group.list = this.group.list.concat(data.rows || []);
+					let totalPage = parseInt(data.total / 10) + 1;
+					if (totalPage === this.group.pageNum) {
+						this.group.loadtext = this.loadtextover
+					} else {
+						this.group.loadtext = this.loadtextmore;
+					}
+				})
+			},
 		}
 	}
 </script>
