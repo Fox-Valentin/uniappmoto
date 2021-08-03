@@ -4,7 +4,7 @@
 			<view class="user__header-warp">
 				<!-- 头像组 -->
 				<view class="user__header" @click.stop="clickUser()">
-					<image class="user__header-image" :src="item.avatar" mode="aspectFill"></image>
+					<image class="user__header-image" :src="item.avatar" mode="aspectFill" lazy-load></image>
 				</view>
 			</view>
 			<view class="user__content">
@@ -29,7 +29,7 @@
 		<view class="allImage" v-else>
 			<view class="imgList">
 				<view class="images" v-for="(img,index) in imgList" :key="index">
-					<image @click.stop="previewImg()" class="oneimg" :src="img" mode="aspectFill"
+					<image lazy-load @click.stop="previewImg()" class="oneimg" :src="img" mode="aspectFill"
 						:style="{width:imgWidth+'px','max-height':imgHeight+'px'}"></image>
 				</view>
 			</view>

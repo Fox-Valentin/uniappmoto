@@ -5,7 +5,7 @@
 			<view class="uni-card__title">
 				<view class="uni-card__title-box">
 					<view class="uni-card__title-header">
-						<image class="uni-card__title-header-image" :src="item.logo" mode="scaleToFill" />
+						<image class="uni-card__title-header-image" :src="item.logo" mode="scaleToFill" lazy-load />
 					</view>
 					<view class="uni-card__title-content">
 						<text class="uni-card__title-content-title uni-ellipsis">{{ item.topicName }}</text>
@@ -21,8 +21,7 @@
 		<view class="uni-card__content uni-border-bottom" @click.stop="clickCard">
 			<view>
 				<view class="image-box">
-					<image class="image" mode="widthFix"
-						:src="item.bg" />
+					<image class="image" mode="widthFix" :src="item.bg" lazy-load />
 				</view>
 				<view class="content-box">
 					<text class="content-box-text">{{item.description}}</text>
