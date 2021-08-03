@@ -484,6 +484,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/drive-map/drive-map",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "骑行地图",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -516,7 +525,7 @@
 				"selectedIconPath":"/static/tabbar/papered.png"
 			},
 			{
-				"pagePath":"pages/mileage-counter/mileage-counter",
+				"pagePath":"pages/drive-map/drive-map",
 				"text":"我的",
 				"iconPath":"/static/tabbar/home.png",
 				"selectedIconPath":"/static/tabbar/homeed.png"

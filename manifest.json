@@ -14,22 +14,30 @@
             "autoclose" : true,
             "delay" : 0
         },
-        "modules" : {},
+        "modules" : {
+            "Maps" : {},
+            "Speech" : {}
+        },
         /* 模块配置 */
         "distribute" : {
             /* 应用发布信息 */
             "android" : {
                 /* android打包配置 */
+                "packagename" : "com.moto.uniapp",
                 "permissions" : [
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
                     "<uses-permission android:name=\"android.permission.CAMERA\"/>",
                     "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
                     "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
                     "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
@@ -38,6 +46,7 @@
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ]
             },
@@ -46,11 +55,34 @@
             "sdkConfigs" : {
                 "oauth" : {},
                 "share" : {},
-                "speech" : {},
-                "ad" : {}
+                "speech" : {
+                    "ifly" : {}
+                },
+                "ad" : {},
+                "maps" : {
+                    "amap" : {
+                        "appkey_ios" : "ecce54cbd3948224b24b3be237f96a16",
+                        "appkey_android" : "0338fb22673122ee3b74c80a41688fbd"
+                    }
+                }
             }
         },
-        "nativePlugins" : {}
+        "nativePlugins" : {
+            "AMap-NavSdkWX" : {
+                "__plugin_info__" : {
+                    "name" : "高德地图导航、鹰眼轨迹、持续定位插件(Android和iOS) - [试用版，仅用于自定义调试基座]",
+                    "description" : "为兼容uniapp自带高德地图，务必勾选高德地图sdk，有问题联系qq：16792999",
+                    "platforms" : "Android,iOS",
+                    "url" : "https://ext.dcloud.net.cn/plugin?id=2101",
+                    "android_package_name" : "",
+                    "ios_bundle_id" : "",
+                    "isCloud" : true,
+                    "bought" : 0,
+                    "pid" : "2101",
+                    "parameters" : {}
+                }
+            }
+        }
     },
     /* SDK配置 */
     "quickapp" : {},

@@ -38,10 +38,48 @@
 				</view>
 			</view>
 		</view>
+		<view class="drive-history-text_wrapper">
+			<view class="text_upper">
+				<view class="text-title">
+					3 月, 骑行总距离
+				</view>
+				<view class="text-title">
+					(公里)
+				</view>
+			</view>
+			<view class="text_middle">
+				60km
+			</view>
+			<view class="text_bottom">
+				<view class="text_bottom_wrapper">
+					<view class="text-title text_bottom_item">完成(次)</view>
+					<view class="text-title text_bottom_item">消耗(千卡)</view>
+				</view>
+				<view class="text_bottom_wrapper">
+					<view class="text-value text_bottom_item">1</view>
+					<view class="text-value text_bottom_item">52</view>
+				</view>
+			</view>
+			<view class="text_bottom">
+				<view class="text_bottom_wrapper">
+					<view class="text-title text_bottom_item">累计用时</view>
+					<view class="text-title text_bottom_item">平均时速</view>
+				</view>
+				<view class="text_bottom_wrapper">
+					<view class="text-value text_bottom_item">00:02:30</view>
+					<view class="text-value text_bottom_item">28</view>
+				</view>
+			</view>
+			<view class="uni-common-mt">
+				<button type="primary" class="book-btn" hover-class="book-btn-hover" @click="showRoute">开始骑行</button>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
+	const sdkwx = uni.requireNativePlugin('AMap-NavSdkWX');
+	var navi = uni.requireNativePlugin('AMap-Navi');
 	export default {
 		data() {
 			return {
@@ -51,6 +89,28 @@
 				weekMax: 100,
 				monthMax: 100,
 			}
+		},
+		onLoad() {
+			navi.addAMapNaviListener(function(res){
+				if (res.type == "onCalculateRouteSuccess") {//路径规划成功回调
+					console.log("onCalculateRouteSuccess", res.data);
+					var routeid = res.data.routeid[0];
+					navi.getNaviPath(routeid, function(res2){
+						console.log("getNaviPath", res2);
+					});
+				}
+				if(res.type == "onArriveDestination") {
+					console.log("onArriveDestination", res.data);
+					this.data = res.data;
+				}
+				if(res.type == "onNaviInfoUpdate") {
+					console.log("onNaviInfoUpdate", res.data);
+				}
+				if(res.type == "onEndEmulatorNavi") {
+					console.log("onEndEmulatorNavi", res.data);
+				}
+				
+			});
 		},
 		methods: {
 			onClickItem(e) {
@@ -71,6 +131,13 @@
 					break;
 				}
 				return res + "rpx";
+			},
+			showRoute() {
+				sdkwx.showRoute({
+				     theme:0,
+				    trafficEnabled:true
+				}, function(res) { 
+				});
 			},
 		}
 	}
@@ -105,5 +172,43 @@
 			}
 		}
 	}
-	
+	.drive-history-text_wrapper {
+			width: 630rpx;
+			margin: 0 auto;
+			padding-top: 50rpx;
+			.text_upper {
+				display: flex;
+				justify-content: space-between;
+			}
+			.text-title {
+				font-size: 12rpx;
+				color: $uni-font-color-black;
+			}
+			.text_middle {
+				text-align: center;
+				font-size: 100rpx;
+				color: $uni-color-botton;
+			}
+			.text_bottom {
+				.text_bottom_wrapper {
+					display: flex;
+					justify-content: space-between;
+					.text_bottom_item {
+						width: 150rpx;
+						text-align: center;
+					}
+					.text-value {
+						font-size: 40rpx;
+						color: $uni-text-color-normal;
+					}
+				}
+			}
+	}
+	.book-btn {
+		background-color: $uni-color-botton;
+		border-radius: 30px;
+	}
+	.book-btn-hover {
+		background-color: #fd5841;
+	}
 </style>

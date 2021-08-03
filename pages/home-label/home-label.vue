@@ -7,8 +7,8 @@
 			</view>
 			<!-- <uni-load-more v-if="loading" status="loading" iconType="snow"></uni-load-more> -->
 			<view v-if="!loading" class="label-content">
-				<view class="label-content__item" v-for="(item,index) in labelList" :key="item._id">
-					{{item.name}}
+				<view class="label-content__item" v-for="(item,index) in labelList" :key="item.tagId">
+					{{item.tagName}}
 					<uni-icons v-if="is_edit" class="icons-close" type="clear" size="20" color="red" @click="del(index)"></uni-icons>
 				</view>
 				<view v-if="labelList.length === 0 && !loading" class="no-data">
@@ -22,7 +22,7 @@
 			</view>
 			<!-- <uni-load-more v-if="loading" status="loading" iconType="snow"></uni-load-more> -->
 			<view v-if="!loading" class="label-content">
-				<view class="label-content__item" v-for="(item,index) in list" :key="item._id" @click="add(index)">{{item.name}}</view>
+				<view class="label-content__item" v-for="(item,index) in list" :key="item.tagId" @click="add(index)">{{item.tagName}}</view>
 			</view>
 			<view v-if="list.length === 0  && !loading" class="no-data">
 				当前没有数据
@@ -70,26 +70,24 @@
 			setUpdateLabel(label) {
 				let newArrIds = []
 				label.forEach(item => {
-					newArrIds.push(item._id)
+					newArrIds.push(item.tagId)
 				})
 				uni.showLoading()
 				console.log(newArrIds);
-				this.$api.update_label({
-					label: newArrIds
-				}).then((res) => {
+				this.$http.post("/api/app/api/user/updateTags", newArrIds).then(res => {
+					console.log(res)
 					uni.hideLoading()
-					uni.showToast({
-						title: '更新成功',
-						icon: 'none'
-					})
-					uni.$emit('labelChange')
 				})
 			},
 			getLabel() {
 				this.loading = true
-				this.$http.get("/api/app/api/tag/list").then(res => {
+				try{
+					this.labelList = this.$store.state.userinfo.tags;
+				}catch(e){
+					console.log(e)
+				}
+				this.$http.get("/api/app/api/user/notAssociatedTags").then(res => {
 					this.loading = false
-					this.labelList = res;
 					this.list = res;
 				})
 			}

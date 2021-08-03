@@ -120,7 +120,6 @@
 					confirmText: '是',
 					success: res => {
 						if (res.confirm) {
-							console.log('11')
 							this.$http.put(`/api/app/api/appointment/cancel/${this.detail.id}`).then(res => {
 								uni.showToast({
 									title: "取消预约成功",
