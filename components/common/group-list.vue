@@ -5,11 +5,11 @@
 			<view class="uni-card__title">
 				<view class="uni-card__title-box">
 					<view class="uni-card__title-header">
-						<image class="uni-card__title-header-image" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png" mode="scaleToFill" />
+						<image class="uni-card__title-header-image" :src="item.logo" mode="scaleToFill" />
 					</view>
 					<view class="uni-card__title-content">
-						<text class="uni-card__title-content-title uni-ellipsis">{{ '标题内容' }}</text>
-						<text class="uni-card__title-content-extra uni-ellipsis">{{ '副标题' }}</text>
+						<text class="uni-card__title-content-title uni-ellipsis">{{ item.topicName }}</text>
+						<!-- <text class="uni-card__title-content-extra uni-ellipsis">{{ '副标题' }}</text> -->
 					</view>
 				</view>
 				<view v-show="!isJoin" @tap="joinGroup">
@@ -21,16 +21,15 @@
 		<view class="uni-card__content uni-border-bottom" @click.stop="clickCard">
 			<view>
 				<view class="image-box">
-					<image class="image" mode="aspectFill"
-						src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/094a9dc0-50c0-11eb-b680-7980c8a877b8.jpg" />
+					<image class="image" mode="widthFix"
+						:src="item.bg" />
 				</view>
 				<view class="content-box">
-					<text class="content-box-text">标题卡片带有一个双标题头部，右侧为额外描述信息 ，内容可自定义实现</text>
+					<text class="content-box-text">{{item.description}}</text>
 				</view>
 				<view class="bottom-box">
 					<view class="u-f-ac" >
-						<text class="content-box-text bottom-text">2人赞过</text>
-						<text @tap.stop="clickComent" class="content-box-text bottom-text">查看全部评论</text>
+						<text @tap.stop="clickComent" class="content-box-text bottom-text">社群人数（56）</text>
 					</view>
 					<view class="u-f-ac heart-list">
 						<block v-for="(item,index) in heartList" :key="index">
@@ -42,14 +41,14 @@
 				</view>
 			</view>
 		</view>
-		<!-- 底部 -->
+		<!-- 		
 		<view class="uni-card__footer">
 			<view class="footer-box">
 				<view class="footer-box__item" @click.stop="footerClick('评论')"><uni-icons type="chat" size="12"></uni-icons><text>评论</text></view>
 				<view class="footer-box__item" @click.stop="footerClick('喜欢')"><uni-icons type="heart" size="12"></uni-icons><text>喜欢</text></view>
 				<view class="footer-box__item" @click.stop="footerClick('分享')"><uni-icons type="pengyouquan" size="12"></uni-icons><text>分享</text></view>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -113,19 +112,11 @@
 
 <style scoped lang="scss">
 	.image-box {
-		/* #ifndef APP-NVUE */
-		display: flex;
-		flex-direction: column;
-		/* #endif */
-		height: 380rpx;
-		overflow: hidden;
+
 	}
 
 	.image {
-		/* #ifndef APP-NVUE */
 		width: 100%;
-		height: 100%;
-		/* #endif */
 		flex: 1;
 	}
 

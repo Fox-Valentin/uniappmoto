@@ -465,7 +465,19 @@
 				}
             }
             
-        }
+        },
+		{
+		    "path" : "pages/add-group/add-group",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "创建社群",
+		        "enablePullDownRefresh": false,
+				"app-plus":{
+					"scrollIndicator":"none"
+				}
+		    }
+		    
+		}
         ,{
             "path" : "pages/home-label/home-label",
             "style" :                                                                                    

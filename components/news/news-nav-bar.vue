@@ -24,12 +24,12 @@
 			</block>
 		</uni-nav-bar>
 		<transition name="uni-fade">
-			<view class="arrivalNavigation" v-if="showHidden">
+			<view class="arrivalNavigation" v-if="showHidden" @click="openAdd()">
 				<view class="d4"></view>
 				<view class="sideNavigation">
 					<nav>
 						<ul>
-							<navigator url="../arrivalQuery/arrivalQuery">
+							<navigator url="../../pages/add-group/add-group">
 								<li>创建社群</li>
 							</navigator>
 							<navigator url="../retailStore/retailStore">
